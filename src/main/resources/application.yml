@@ -21,8 +21,6 @@ spring:
             - Method=GET
           filters:
             - name: DynamicPathFilters
-          metadata:
-            pathVariable: id
 
 
 logging:
