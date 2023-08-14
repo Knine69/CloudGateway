@@ -5,20 +5,17 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.stereotype.Component;
 
 @Component
-public class DynamicPathFilters extends AbstractGatewayFilterFactory<DynamicPathFilters> {
+public class DynamicPathFilters extends AbstractGatewayFilterFactory<Object> implements Paths {
 
     @Override
-    public GatewayFilter apply(DynamicPathFilters config) {
+    public GatewayFilter apply(Object config) {
         return (exchange, chain) -> {
             String variable = exchange.getRequest()
                     .getPath()
-                    .value();
-            exchange.getRequest()
-                    .mutate()
-                    .path("/" + variable)
-                    .build();
-            return chain.filter(exchange);
-        };
+                    .value()
+                    .replace("/gateway/one/", "");
 
+            return chain.filter(exchange.mutate().request(createDynamicPath(variable, exchange)).build());
+        };
     }
 }
