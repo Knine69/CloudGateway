@@ -1,23 +1,21 @@
 server:
   port: 8081
 
-baseUri: http://localhost:8080
-
 spring:
   cloud:
     gateway:
       routes:
         - id: all_route
-          uri: ${baseUri}
+          uri: ${SERVER_URI}
           predicates:
             - Path=/gateway/all/**
             - Method=GET
           filters:
             - SetPath=/all
         - id: singular_route
-          uri: ${baseUri}
+          uri: ${SERVER_URI}
           predicates:
-            - Path=/gateway/one/**
+            - Path=/gateway/dynamic/**
             - Method=GET
           filters:
             - name: DynamicPathFilters
