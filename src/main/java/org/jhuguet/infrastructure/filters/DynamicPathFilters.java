@@ -13,7 +13,7 @@ public class DynamicPathFilters extends AbstractGatewayFilterFactory<Object> imp
             String variable = exchange.getRequest()
                     .getPath()
                     .value()
-                    .replace("/gateway/one/", "");
+                    .replace("/gateway/dynamic/", "");
 
             return chain.filter(exchange.mutate().request(createDynamicPath(variable, exchange)).build());
         };
