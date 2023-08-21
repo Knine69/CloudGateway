@@ -15,11 +15,14 @@ jobs:
       
     - name: Build Gateway Artifact
       run: |
+        echo "Check dir structure"
+        ls -la
+
         echo "Navigate inside the Gateway project"
         cd ../../
 
         echo "Build Artifact"
-        gradle build
+        ./gradle build
 
     - name: Update & Publish Docker Image
       run: |
