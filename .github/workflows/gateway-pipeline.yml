@@ -18,8 +18,8 @@ jobs:
         echo "Navigate inside the Gateway project"
         cd ../../
 
-      echo "Build Artifact"
-      gradle build
+        echo "Build Artifact"
+        gradle build
 
     - name: Update & Publish Docker Image
       run: |
