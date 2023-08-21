@@ -18,17 +18,11 @@ jobs:
         echo "Check dir structure"
         ls -la
 
-        echo "Navigate inside the Gateway project"
-        cd ../../
-
         echo "Build Artifact"
         ./gradle build
 
     - name: Update & Publish Docker Image
       run: |
-        echo "Navigate to root directory"
-        cd ../../
-
         echo "Build Docker Image"
         docker build -t gateway-app .
 
