@@ -1,0 +1,36 @@
+name: Spring cloud based pipelines
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Build Gateway Artifact
+      run: |
+      echo "Navigate inside the Gateway project"
+      cd ../../
+
+      echo "Build Artifact"
+      gradle build
+
+    - name: Update & Publish Docker Image
+      run: |
+      echo "Navigate to root directory"
+      cd ../../
+
+      echo "Build Docker Image"
+      docker build -t gateway-app .
+
+      echo "Tag Image To Repository"
+      docker tag gateway-app:latest jhuguet/basic_repo:gateway-app
+
+      echo "Push Image To Repository"
+      docker push jhuguet/basic_repo:gateway-app
