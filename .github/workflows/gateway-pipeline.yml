@@ -8,29 +8,30 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'corretto'
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
-      with:
-        arguments: build
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'corretto'
 
-    - name: Update & Publish Docker Image
-      run: |
-        echo "Build Docker Image"
-        docker build -t gateway-app .
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
 
-        echo "Tag Image To Repository"
-        docker tag gateway-app:latest jhuguet/basic_repo:gateway-app
+      - name: Run build with Gradle wrapper
+        run: ./gradlew build --scan
 
-        echo "Push Image To Repository"
-        docker push jhuguet/basic_repo:gateway-app
+      - name: Update & Publish Docker Image
+        run: |
+          echo "Build Docker Image"
+          docker build -t gateway-app .
+
+          echo "Tag Image To Repository"
+          docker tag gateway-app:latest jhuguet/basic_repo:gateway-app
+
+          echo "Push Image To Repository"
+          docker push jhuguet/basic_repo:gateway-app
