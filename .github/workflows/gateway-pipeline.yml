@@ -21,6 +21,14 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
+      
+      - name: Check location
+        run: |
+          echo "PDW command"
+          pwd
+
+          echo "List directory contents"
+          ls -la
 
       - name: Run build with Gradle wrapper
         run: ./gradlew build --scan
