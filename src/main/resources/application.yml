@@ -2,7 +2,6 @@ server:
   port: {GATEWAY_PORT:8083}
 
 spring:
-  profiles: default
   cloud:
     gateway:
       routes:
